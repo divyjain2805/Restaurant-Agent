@@ -7,6 +7,8 @@ __pycache__/
 .env
 *.env
 backend/.env
+prompt.md
+test_scenarios.py
 
 # Databases & SQLite
 *.db
