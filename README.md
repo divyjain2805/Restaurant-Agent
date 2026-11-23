@@ -39,8 +39,8 @@ flowchart TD
 ## 🌟 Key Features
 
 ### 1. 🤖 Dual-Engine LLM Resilience
-- Primary engine: **Groq (`llama-3.3-70b-versatile`)** for ultra-fast, structured culinary extraction.
-- Automatic fallback: **Google Gemini (`gemini-1.5-flash`)** if Groq quotas or rate limits trigger.
+- Primary engine: **Groq (`openai/gpt-oss-20b`)** for ultra-fast, structured culinary extraction.
+- Automatic fallback: **Google Gemini (`gemini-4-hydrogen`)** if Groq quotas or rate limits trigger.
 - Offline heuristics fallback to guarantee zero service interruption during testing or network cutoffs.
 
 ### 2. ⏱️ 8-Second Human-in-the-Loop (HITL) Chef Countdown
@@ -88,7 +88,7 @@ restaurantAgent/
 ├── .gitignore                # Production ignore rules (excludes keys, caches, DBs)
 ├── Dockerfile                # Production Python 3.12 container image
 ├── docker-compose.yml        # Multi-container orchestration (FastAPI + MongoDB)
-├── Procfile                  # Platform entrypoint (Render / Railway / Heroku)
+├── Procfile                  # Platform entrypoint (Render)
 ├── render.yaml               # Render.com blueprint configuration
 ├── requirements.txt          # Python runtime dependencies
 └── README.md                 # Complete documentation
