@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Étoile Royale • Fine Dining Concierge</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Luxury Michelin Navigation Bar -->
+    <header class="navbar">
+        <div class="logo-group">
+            <span class="logo-crest">⚜️</span>
+            <div>
+                <h1 class="logo-title">
+                    L'Étoile Royale
+                    <span class="michelin-stars">★★★★★</span>
+                </h1>
+                <p class="logo-subtitle">Haute Gastronomie & Table Concierge</p>
+            </div>
+        </div>
+
+        <div class="nav-actions-group">
+            <!-- Day / Night Theme Toggle -->
+            <button id="btn-theme-toggle" class="btn-theme-toggle" title="Switch between Day and Night Ambience">
+                <span id="theme-icon">☀️</span> <span id="theme-text">Day View</span>
+            </button>
+
+            <!-- Status Indicators -->
+            <div class="status-pill" id="pill-api">
+                <span class="dot gold"></span>
+                <span>Maître d' AI: Ready</span>
+            </div>
+            <div class="status-pill" id="pill-restock">
+                <span class="dot green"></span>
+                <span id="restock-countdown">24h Pantry: Fresh</span>
+            </div>
+
+            <!-- Portal Switcher -->
+            <a href="/admin" class="btn-portal-switch" target="_blank" title="Open Kitchen Executive Panel">
+                👨‍🍳 Kitchen Console ↗
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Dining Dashboard Grid -->
+    <main class="dashboard-grid">
+        
+        <!-- Left: Michelin À La Carte Menu -->
+        <section class="card menu-card">
+            <div class="card-header">
+                <h2>📜 À La Carte Menu</h2>
+                <span class="badge" id="menu-count">10 Selections</span>
+            </div>
+            <p class="section-desc">Artisanal cuisine crafted fresh daily. Select any dish to add it to your order.</p>
+            <div class="menu-list" id="menu-container">
+                <div class="empty-state">Curating menu...</div>
+            </div>
+        </section>
+
+        <!-- Center: Fine Dining Concierge & Order Suite -->
+        <section class="card order-card">
+            <div class="card-header">
+                <h2>🛎️ Table Concierge</h2>
+                <button class="btn-secondary" id="btn-clear-chat">New Service</button>
+            </div>
+
+            <!-- Chat & Progress Feed -->
+            <div class="chat-feed" id="chat-feed">
+                <div class="chat-bubble bot welcome-bubble">
+                    <p>Bonsoir and welcome to <strong>L'Étoile Royale</strong>. I am your personal culinary concierge.</p>
+                    <p class="hint">What fine dishes may our Chef prepare for you today? (e.g. <em>"2 Cheese Burger and 1 French Fries"</em> or select from the left).</p>
+                </div>
+            </div>
+
+            <!-- Customer Reorder Action Card (For 2nd chance corrections) -->
+            <div class="hitl-action-container hidden" id="customer-reorder-container">
+                <div class="hitl-box" id="customer-reorder-box"></div>
+            </div>
+
+            <!-- Kitchen Cooking Status Banner (Shown while Chef is cooking) -->
+            <div class="kitchen-status-banner hidden" id="kitchen-status-banner">
+                <div class="kitchen-spinner"></div>
+                <div>
+                    <strong>👨‍🍳 Executive Kitchen is Preparing Your Meal...</strong>
+                    <p class="kitchen-subtext">The Chef is perfecting your dishes. Verification underway in the Kitchen Console.</p>
+                </div>
+            </div>
+
+            <!-- Order Input Form -->
+            <form class="order-form" id="order-form">
+                <div class="input-wrapper">
+                    <input type="text" id="order-input" placeholder="Request your culinary selection (e.g. 2 Cheese Burger & 1 Coke)..." autocomplete="off" required>
+                    <button type="submit" id="btn-submit-order" class="btn-primary">
+                        <span>Place Order</span> ⚜️
+                    </button>
+                </div>
+                <div class="quick-chips">
+                    <span class="chip-label">Sommelier Selections:</span>
+                    <button type="button" class="chip" data-query="2 Cheese Burger and 1 Coca Cola">🍔 2 Burgers + Coke</button>
+                    <button type="button" class="chip" data-query="1 Creamy Alfredo Pasta">🍝 Truffle Pasta</button>
+                    <button type="button" class="chip" data-query="Tell me about Mars">🪐 Chit-Chat Test</button>
+                    <button type="button" class="chip" data-query="2 Lobster Thermidor">🦞 Off-Menu Test</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Right: Gastronomy Flow & Presentation Bill -->
+        <section class="card flow-card">
+            <div class="card-header">
+                <h2>✨ Service Journey</h2>
+                <span class="badge status-badge" id="workflow-status-badge">Idle</span>
+            </div>
+
+            <!-- Step Pipeline Timeline -->
+            <div class="flow-pipeline">
+                <div class="pipeline-step" id="step-api">
+                    <div class="step-circle">1</div>
+                    <div class="step-info">
+                        <strong>Order Received</strong>
+                        <span class="step-sub">Dual AI Protocol</span>
+                    </div>
+                </div>
+                <div class="pipeline-step" id="step-relevance">
+                    <div class="step-circle">2</div>
+                    <div class="step-info">
+                        <strong>Culinary Validation</strong>
+                        <span class="step-sub">Menu Matching</span>
+                    </div>
+                </div>
+                <div class="pipeline-step" id="step-db">
+                    <div class="step-circle">3</div>
+                    <div class="step-info">
+                        <strong>Pantry Reserved</strong>
+                        <span class="step-sub">MongoDB Stock</span>
+                    </div>
+                </div>
+                <div class="pipeline-step" id="step-cook">
+                    <div class="step-circle">4</div>
+                    <div class="step-info">
+                        <strong>Kitchen Execution</strong>
+                        <span class="step-sub">Chef Verification</span>
+                    </div>
+                </div>
+                <div class="pipeline-step" id="step-serve">
+                    <div class="step-circle">5</div>
+                    <div class="step-info">
+                        <strong>Plated & Presented</strong>
+                        <span class="step-sub">Fine Dining Service</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receipt Container -->
+            <div class="receipt-container hidden" id="receipt-container">
+                <div class="receipt-card">
+                    <div class="receipt-header">
+                        <h3>L'ÉTOILE ROYALE</h3>
+                        <span id="receipt-order-id">#ORD-0000</span>
+                    </div>
+                    <div class="receipt-divider"></div>
+                    <div class="receipt-items" id="receipt-items"></div>
+                    <div class="receipt-divider"></div>
+                    <div class="receipt-row"><span>Subtotal:</span><strong id="receipt-subtotal">$0.00</strong></div>
+                    <div class="receipt-row"><span>Service Tax (5%):</span><strong id="receipt-tax">$0.00</strong></div>
+                    <div class="receipt-row total"><span>Grand Total:</span><strong id="receipt-grand-total">$0.00</strong></div>
+                    <div class="receipt-footer">
+                        <p>⚜️ Merci pour votre visite. Bon appétit! ⚜️</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Logs Terminal -->
+            <div class="terminal-container" style="margin-top: 1.25rem;">
+                <div class="terminal-header">
+                    <span>CONCIERGE AUDIT TRAIL</span>
+                    <span class="dot gold"></span>
+                </div>
+                <div class="terminal-body" id="live-logs">
+                    <div class="log-line text-muted">Awaiting your order request...</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/static/customer.js"></script>
+</body>
+</html>

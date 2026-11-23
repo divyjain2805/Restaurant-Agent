@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Étoile Royale • Executive Kitchen Console</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="admin-body">
+    <!-- Executive Kitchen Navigation Bar -->
+    <header class="navbar admin-navbar">
+        <div class="logo-group">
+            <span class="logo-crest">👨‍🍳</span>
+            <div>
+                <h1 class="logo-title">
+                    L'Étoile Royale
+                    <span class="michelin-stars">★★★★★</span>
+                </h1>
+                <p class="logo-subtitle">Executive Chef & Kitchen Console • Human-in-the-Loop Hub</p>
+            </div>
+        </div>
+
+        <div class="nav-actions-group">
+            <!-- Day / Night Theme Toggle -->
+            <button id="btn-theme-toggle" class="btn-theme-toggle" title="Switch between Day and Night Ambience">
+                <span id="theme-icon">☀️</span> <span id="theme-text">Day Ambience</span>
+            </button>
+
+            <!-- MongoDB & Restock Status -->
+            <div class="status-pill" id="pill-db">
+                <span class="dot gold"></span>
+                <span>MongoDB: Connected</span>
+            </div>
+            <div class="status-pill restock-pill" id="pill-restock" title="Pantry automatically replenishes every 24 hours">
+                <span class="dot green"></span>
+                <span id="restock-countdown">24h Pantry: Active</span>
+                <button id="btn-force-restock" class="btn-micro" title="Force Restock All Inventory Now">🔄</button>
+            </div>
+
+            <!-- Switch to Customer Portal -->
+            <a href="/" class="btn-portal-switch" target="_blank" title="Open Customer Dining View in a new tab">
+                🍽️ Dining Room View ↗
+            </a>
+        </div>
+    </header>
+
+    <!-- Admin Grid Layout -->
+    <main class="admin-dashboard-grid">
+        
+        <!-- Left: Kitchen Cooking Review Queue (HITL) -->
+        <section class="card kitchen-queue-card">
+            <div class="card-header">
+                <h2>🍳 Live Kitchen Cooking Queue (HITL)</h2>
+                <span class="badge active-queue-badge" id="queue-count">0 pending</span>
+            </div>
+            <p class="section-desc">Orders currently being cooked. Chef verification has an 8-second timer with automatic 85% probability resolution.</p>
+            
+            <div class="kitchen-tickets-container" id="kitchen-tickets-container">
+                <div class="empty-state" id="empty-queue-msg">
+                    <span class="empty-icon">⚜️</span>
+                    <p>Kitchen is clear. No dishes currently awaiting Chef verification.</p>
+                    <small>When a guest orders from the dining room, cooking tickets appear here in real time!</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Top: Live Inventory Management -->
+        <section class="card inventory-card">
+            <div class="card-header">
+                <h2>📦 Gastronomy Pantry & Cellar (MongoDB)</h2>
+                <button class="btn-primary" id="btn-refresh-inventory" style="padding: 0.35rem 0.95rem; font-size: 0.8rem;">Refresh</button>
+            </div>
+            <p class="section-desc">Real-time stock from MongoDB. Automatic 24h reset cycle + instant stock adjustment.</p>
+
+            <div class="table-responsive">
+                <table class="admin-table" id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Delicacy</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock / Cap</th>
+                            <th>Replenish</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-tbody">
+                        <tr><td colspan="5" class="text-center">Loading cellar inventory...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Full Width: Orders History & Database Records -->
+        <section class="card orders-history-card">
+            <div class="card-header">
+                <div style="display: flex; align-items: center; gap: 0.85rem;">
+                    <h2>📑 Recent Orders History & Database Records</h2>
+                    <span class="filter-badge" id="orders-filter-badge">Present Orders (Today)</span>
+                </div>
+                <button class="btn-secondary" id="btn-refresh-orders">Refresh Records</button>
+            </div>
+            <p class="section-desc">Shows orders placed today. If no orders exist today, automatically displays the most recent 15 orders from MongoDB.</p>
+
+            <div class="table-responsive">
+                <table class="admin-table" id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Culinary Selection</th>
+                            <th>Total Bill</th>
+                            <th>Lifecycle Status</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody">
+                        <tr><td colspan="5" class="text-center">Fetching database orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/static/admin.js"></script>
+</body>
+</html>
