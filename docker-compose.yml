@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # 1. Restaurant Automation FastAPI Web Server (Backend & Frontend)
+  web:
+    build: .
+    container_name: restaurant_agent_app
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - MONGO_URI=mongodb://mongo:27017
+      - MONGO_DB_NAME=restaurant_db
+    env_file:
+      - backend/.env
+    depends_on:
+      - mongo
+
+  # 2. Real MongoDB Database Service
+  mongo:
+    image: mongo:latest
+    container_name: restaurant_agent_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
